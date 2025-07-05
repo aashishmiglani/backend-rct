@@ -4,7 +4,10 @@ import {
   getContactsByIds
 } from '../models/messageModel.js';
 
-import { twilioClient, fromSMSNumber } from '../utils/twilioClient.js';
+import { twilioClient } from '../utils/twilioClient.js';
+
+const fromWhatsAppNumber = 'whatsapp:+14155238886'; // Twilio sandbox or registered sender
+const contentSid = 'HXb5b62575e6e4ff6129ad7c8efe1f983e'; // Your Twilio Content Template ID
 
 export const sendMessageToEventContacts = async (req, res) => {
   const { event_id } = req.body;
@@ -34,17 +37,23 @@ export const sendMessageToEventContacts = async (req, res) => {
       return res.status(500).json({ error: "Failed to fetch contacts" });
     }
 
-    const messageBody = `📅 Reminder: "${event.event_name}" on ${event.event_date} at ${event.event_time}`;
+    // WhatsApp Content Variables
+    const contentVariables = JSON.stringify({
+      "1": event.event_date,
+      "2": event.event_time
+    });
 
     const results = await Promise.all(
       contacts.map(async contact => {
         try {
+          const to = `whatsapp:${contact.phone}`;
           await twilioClient.messages.create({
-            body: messageBody,
-            from: fromSMSNumber,
-            to: contact.phone
+            from: fromWhatsAppNumber,
+            contentSid,
+            contentVariables,
+            to
           });
-          return { to: contact.phone, status: 'sent' };
+          return { to, status: 'sent' };
         } catch (err) {
           return { to: contact.phone, status: 'failed', error: err.message };
         }
