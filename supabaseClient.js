@@ -21,4 +21,4 @@ const test = async () => {
 };
 test();
 
-export { supabase }
+export default supabase;

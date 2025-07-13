@@ -1,4 +1,4 @@
-import { supabase } from '../supabaseClient.js';
+import supabase from '../supabaseClient.js';
 
 export const createNotification = (notification) =>
   supabase.from('notifications_table').insert([notification]).select();

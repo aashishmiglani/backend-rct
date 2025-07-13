@@ -4,6 +4,8 @@ import scheduleRoutes from './routes/scheduleRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import notificationsRouter from './routes/notificationRoutes.js';
 import sendMessageRouter from './routes/sendMessage.js';
+import authRoutes from './routes/authRoutes.js';
+
 
 
 
@@ -18,6 +20,8 @@ app.use('/api/schedule', scheduleRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/notifications', notificationsRouter);
 app.use('/api/send-message', sendMessageRouter);
+app.use('/api/auth', authRoutes); 
+
 
 
 

@@ -1,4 +1,4 @@
-import { supabase } from '../supabaseClient.js';
+import supabase  from '../supabaseClient.js';
 
 export const getEventDetails = (event_id) => {
   return supabase

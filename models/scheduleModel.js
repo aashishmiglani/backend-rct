@@ -1,4 +1,4 @@
-import { supabase } from '../supabaseClient.js';
+import supabase  from '../supabaseClient.js';
 
 export const insertEvent = (name, date, time) => {
   return supabase
